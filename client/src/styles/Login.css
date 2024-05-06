@@ -1,0 +1,34 @@
+.dark {
+  background-color: #303030 !important;
+}
+.dark .box {
+  color: white !important;
+  background-color: #383838 !important;
+}
+.dark .LoadingAnim {
+  background-color: #303030;
+  color: white;
+}
+
+.light {
+  background-color: #ffffff !important;
+}
+
+#top-barloader {
+  position: absolute !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+.hero.is-fullheight {
+  min-height: calc(100vh - var(--vh-check, 0px)) !important;
+}
+
+.policy {
+  font-size: 12px;
+}
+
+.policyLink:hover {
+  color: #344ba9;
+}
