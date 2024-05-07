@@ -1,38 +1,18 @@
 import { Route, Routes } from "react-router-dom";
-import MainMenu from "./menus/MainMenu/MainMenu.tsx";
-import Multiplayer from "./modes/Multiplayer/Multiplayer.tsx";
-import Singleplayer from "./modes/SinglePlayer/Singleplayer.tsx";
+import MainMenu from "./menus/MainMenu.tsx";
+import Multiplayer from "./modes/Multiplayer.tsx";
+import Singleplayer from "./modes/Singleplayer.tsx";
 import Tournament from "./tournament/Tournament.tsx";
 
 function App() {
   return (
     <div className="flex flex-1 bg-base-300 w-full h-full">
       <Routes>
-        <Route
-          path="/"
-          element={
-            <MainMenu />
-          }
-        />
-        <Route
-          path="/singleplayer"
-          element={
-            <Singleplayer />
-          }
-        />
+        <Route path="/" element={<MainMenu />} />
+        <Route path="/singleplayer" element={<Singleplayer />} />
 
-        <Route
-          path="/multiplayer"
-          element={
-            <Multiplayer />
-          }
-        />
-        <Route
-          path="/tournament"
-          element={
-            <Tournament />
-          }
-        />
+        <Route path="/multiplayer" element={<Multiplayer />} />
+        <Route path="/tournament" element={<Tournament />} />
       </Routes>
     </div>
   );

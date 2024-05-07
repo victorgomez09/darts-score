@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Gamemode, InAndOutMode } from "../../types/global";
-import LocalGames from "../../components/game/LocalGames/LocalGames.tsx";
-import PlayersAndSettings from "../../components/gameSettings/PlayersAndSettings/PlayersAndSettings.tsx";
 import { useNavigate } from "react-router-dom";
-import PopUp from "../../components/popUps/PopUp/PopUp.tsx";
-import EndGamePopUp from "../../components/popUps/EndGamePopUp/EndGamePopUp.tsx";
+import PlayersAndSettings from "../../components/game-settings/PlayersAndSettings";
+import LocalGames from "../../components/templates/LocalGames";
 
 function Tournament() {
   const [allPlayers, setAllPlayers] = useState(["Vira"]);
@@ -17,8 +15,10 @@ function Tournament() {
   const [legsForSet, setLegsForSet] = useState<number>(1);
   const [modeIn, setModeIn] = useState<InAndOutMode>("straight");
   const [modeOut, setModeOut] = useState<InAndOutMode>("double");
-  const [endOfRoundPopUpContent, setEndOfRoundPopUpContent] = useState<string>("");
-  const [showEndOfRoundPopUp, setShowEndOfRoundPopUp] = useState<boolean>(false);
+  const [endOfRoundPopUpContent, setEndOfRoundPopUpContent] =
+    useState<string>("");
+  const [showEndOfRoundPopUp, setShowEndOfRoundPopUp] =
+    useState<boolean>(false);
   const [tournamentWinner, setTournamentWinner] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -58,7 +58,9 @@ function Tournament() {
   };
 
   const removePlayersFromWaitingPlayers = (playersToRemove: string[]): void => {
-    const updatedPlayers = waitingPlayers.filter((player) => !playersToRemove.includes(player));
+    const updatedPlayers = waitingPlayers.filter(
+      (player) => !playersToRemove.includes(player)
+    );
     setWaitingPlayers(updatedPlayers);
   };
 
@@ -81,7 +83,9 @@ function Tournament() {
   const setRemainingPlayersForNewRound = (remainingPlayers: string[]) => {
     const randomPlayers = chooseTwoRandomPlayers(remainingPlayers);
     setCurrentPlayers(randomPlayers);
-    const waitingPlayers = remainingPlayers.filter((player) => !randomPlayers.includes(player));
+    const waitingPlayers = remainingPlayers.filter(
+      (player) => !randomPlayers.includes(player)
+    );
     setWaitingPlayers(waitingPlayers);
     setWinners([]);
   };
@@ -93,37 +97,16 @@ function Tournament() {
     removePlayersFromWaitingPlayers(randomPlayers);
   };
 
-  const handleEndPopUpClicked = (): void => {
-    setTournamentWinner(null);
-    setGameStarted(false);
-  };
-
-  const nextRoundClicked = (): void => {
-    setShowEndOfRoundPopUp(false);
-    setGameStarted(true);
-  };
-
   const gameProps = {
     selectedGamemode: selectedGamemode,
     setsToWin: setsToWin,
     legsForSet: legsForSet,
     modeIn: modeIn,
-    modeOut: modeOut
+    modeOut: modeOut,
   };
 
   return (
     <>
-      {showEndOfRoundPopUp && (
-        <PopUp content={endOfRoundPopUpContent} btnContent="Next round" cbBtnClicked={nextRoundClicked} />
-      )}
-      {tournamentWinner && (
-        <EndGamePopUp
-          winnerName={tournamentWinner}
-          gameType={"tournament"}
-          gamemode={selectedGamemode}
-          cbBtnClicked={handleEndPopUpClicked}
-        />
-      )}
       {gameStarted ? (
         <LocalGames
           {...gameProps}

@@ -2,14 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    height: 100%;
-    width: 100%;
-    display: flex;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 #root {
-    height: 100%;
-    width: 100%;
-    display: flex;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.cell {
+  width: 29px;
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+}
+
+.cell.slash::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  @apply bg-base-content;
+}
+
+.cell.slash::before {
+  transform: rotate(-45deg);
+}
+
+.cell.x::before,
+.cell.x::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  @apply bg-base-content;
+}
+
+.cell.x::before {
+  transform: rotate(-45deg);
+}
+
+.cell.x::after {
+  transform: rotate(45deg);
+}
+
+.circle {
+  border-radius: 50%;
+  @apply border-2 border-base-content;
+}
+
+.cell.closedAll::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  @apply border-2 border-base-content;
+  box-sizing: border-box;
 }
