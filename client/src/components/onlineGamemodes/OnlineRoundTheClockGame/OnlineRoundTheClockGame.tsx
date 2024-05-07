@@ -17,7 +17,7 @@ function OnlineRoundTheClockGame(props: OnlineRoundTheClockGameProps) {
 
   return (
     <RoundTheClockGameView
-      isLoggedIn={props.isLoggedIn}
+      ={props.}
       currentRound={props.currentRound}
       players={props.players}
       startingPlayerIndex={props.startingPlayerIndex}

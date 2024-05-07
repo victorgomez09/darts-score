@@ -20,13 +20,14 @@ function SettingsMenu(props: SettingsMenuProps) {
   };
 
   return (
-    <div className="hero is-justify-content-center is-align-items-center is-fullheight">
-      <div className="hero-body">
-        <div className="container box">
+    <div className="flex flex-1 items-center justify-center gap-2 overflow-hidden">
+      <div className="card !shadow bg-base-100 h-5/6 w-8/12">
+        <div className="card-body overflow-auto">
           <GamemodeSelection
             selectedGamemode={props.selectedGamemode}
             setSelectedGamemode={props.setSelectedGamemode}
           />
+          <div className="divider p-0 m-0"></div>
           <GameSettings
             selectedGamemode={props.selectedGamemode}
             setsToWin={props.setsToWin}

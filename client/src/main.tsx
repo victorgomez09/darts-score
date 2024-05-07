@@ -1,16 +1,13 @@
 import ReactDOM from "react-dom/client";
-import App from "./pages/App.tsx";
-import "./styles/index.css";
-import "bulma/css/bulma-rtl.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/AuthProvider";
+
+import './main.css';
+import App from "./pages/App.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <AuthProvider>
       <Routes>
         <Route path="/*" element={<App />} />
       </Routes>
-    </AuthProvider>
   </BrowserRouter>
 );

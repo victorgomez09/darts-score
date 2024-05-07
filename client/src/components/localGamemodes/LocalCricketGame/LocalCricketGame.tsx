@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 import CricketGameView from "../../gamemodeViews/CricketGameView/CricketGameView.tsx";
-import { LocalCricketGameProps } from "./LocalCricketGame";
 import { CricketStatus, PlayerStatsCricket, PlayerToPlayerStatsCricket } from "../../../types/playerStats.ts";
+import { BaseGameProps } from "../BaseGameProps";
+
+export interface LocalCricketGameProps extends BaseGameProps {}
 
 const initializePlayerStats = (players: string[]): PlayerToPlayerStatsCricket => {
   const initialPoints: PlayerToPlayerStatsCricket = {};
@@ -201,7 +203,6 @@ function LocalCricketGame(props: LocalCricketGameProps) {
 
   return (
     <CricketGameView
-      isLoggedIn={props.isLoggedIn}
       currentRound={props.currentRound}
       players={players}
       startingPlayerIndex={props.startingPlayerIndex}

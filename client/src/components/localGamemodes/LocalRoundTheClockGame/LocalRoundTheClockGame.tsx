@@ -76,7 +76,6 @@ function LocalRoundTheClockGame({ throwsRemaining, currentPlayerIndex, ...props 
 
   return (
     <RoundTheClockGameView
-      isLoggedIn={props.isLoggedIn}
       currentRound={props.currentRound}
       players={players}
       startingPlayerIndex={props.startingPlayerIndex}

@@ -1,5 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
-import { PlayerMenuProps } from "./PlayerMenu";
+
+export interface PlayerMenuProps {
+  players: string[];
+  maxPlayers: number;
+  isEditable: boolean;
+  playerCountInfo: string;
+  setPlayers?: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
 function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
   const [currentPlayer, setCurrentPlayer] = useState("");
@@ -34,38 +41,35 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
     setError("");
   };
   return (
-    <div style={{ minWidth: "250px" }}>
-      <div className="column is-flex is-justify-content-center">
-        <h1 className="is-size-4 mb-3">Player List</h1>
-      </div>
-      <hr></hr>
+    <div className="w-full">
+      <h1 className="text-center font-semibold mb-3">Player List</h1>
       <ul className="mb-1 mt-4 pr-3 pl-3 playerList">
         {players.map((player, index) => (
           <li key={index}>
-            <div className="mb-2 is-flex">
-              <div className="is-flex-grow-1" style={{ lineHeight: "30px" }}>
+            <div className="flex items-center justify-between">
+              <div>
                 {player}
               </div>
               {props.isEditable && (
                 <div>
-                  <button className="button is-danger is-small ml-2" onClick={() => deletePlayer(index)}>
+                  <button className="btn btn-sm btn-error ml-2" onClick={() => deletePlayer(index)}>
                     Delete
                   </button>
                 </div>
               )}
             </div>
-            {index != players.length - 1 && <hr />}
+            {index != players.length - 1 && <div className="divider opacity-30 p-0 m-0"></div>}
           </li>
         ))}
       </ul>
-      <p className="has-text-centered is-size-6 has-text-info mb-6">{props.playerCountInfo}</p>
+      <p className="text-center text-sm font-thin">{props.playerCountInfo}</p>
       {props.isEditable && (
-        <div>
-          <div className="field is-grouped">
-            <div className="control mr-2">
+        <div className="mt-4">
+          <div className="divider"></div>
+
+          <div className="flex items-center gap-2 flex-1 w-full">
               <input
-                className={`input ${error && "is-danger"}`}
-                style={{ width: "auto" }}
+                className={`input input-bordered w-full ${error && "input-error"}`}
                 type="text"
                 value={currentPlayer}
                 onChange={handleInputChange}
@@ -73,16 +77,13 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
                 placeholder="Enter player name"
                 disabled={players.length === props.maxPlayers}
               />
-            </div>
-            <div className="control">
               <button
-                className="button is-primary ml-2"
+                className="btn btn-primary"
                 onClick={addPlayer}
                 disabled={players.length === props.maxPlayers}
               >
                 Add Player
               </button>
-            </div>
           </div>
           {error && (
             <p className="has-text-danger" style={{ textAlign: "center" }}>

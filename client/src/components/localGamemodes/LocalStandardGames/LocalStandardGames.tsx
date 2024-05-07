@@ -1,11 +1,20 @@
-import { useState } from "react";
-import "../../../styles/App.css";
-import "../../../styles/Games.css";
-import { PlayerStats, PlayerToPlayerStats } from "../../../types/playerStats.ts";
+import React, { useState } from "react";
 import { getAllOptions, sumRound } from "../../../helpers/calcCheckouts";
-import StandardGamesView from "../../gamemodeViews/StandardGamesView/StandardGamesView.tsx";
-import { LocalStandardGamesProps } from "./LocalStandardGames";
 import { stringifyThrow } from "../../../helpers/stringifyThrow";
+import { InAndOutMode } from "../../../types/global";
+import { PlayerStats, PlayerToPlayerStats } from "../../../types/playerStats.ts";
+import StandardGamesView from "../../gamemodeViews/StandardGamesView/StandardGamesView.tsx";
+import { BaseGameProps } from "../BaseGameProps";
+
+export interface LocalStandardGamesProps extends BaseGameProps {
+  gamemodeTotalScore: number;
+  modeIn: InAndOutMode;
+  modeOut: InAndOutMode;
+  setThrowsRemaining: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentRound: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPlayerIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
 
 const initializePlayerStats = (
   players: string[],
@@ -219,7 +228,6 @@ function LocalStandardGames({ currentPlayerIndex, throwsRemaining, ...props }: L
 
   return (
     <StandardGamesView
-      isLoggedIn={props.isLoggedIn}
       currentRound={props.currentRound}
       players={players}
       startingPlayerIndex={props.startingPlayerIndex}
@@ -231,7 +239,7 @@ function LocalStandardGames({ currentPlayerIndex, throwsRemaining, ...props }: L
       cbHandleMultiplierClicked={handleMultiplierClick}
       cbHandleUndoClicked={handleUndoClick}
       modeOut={props.modeOut}
-    />
+      throwsRemaining={throwsRemaining}  />
   );
 }
 

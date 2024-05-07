@@ -1,6 +1,4 @@
 import { useState } from "react";
-import "../../../styles/App.css";
-import "../../../styles/Games.css";
 import {
   PlayerStats,
   PlayerToPlayerStats,
@@ -14,6 +12,7 @@ import LudoGameView from "../../gamemodeViews/LudoGameView/LudoGameView.tsx";
 export interface LocalLudoGameProps extends BaseGameProps {
   modeIn: InAndOutMode;
   modeOut: InAndOutMode;
+  throwsRemaining: number;
   setThrowsRemaining: React.Dispatch<React.SetStateAction<number>>;
   setCurrentRound: React.Dispatch<React.SetStateAction<number>>;
   setCurrentPlayerIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -39,7 +38,7 @@ const initializePlayerStats = (
       average:
         index === winningPlayerIndex
           ? ((stats.totalScore + (thrownPoints || 0)) * 3) /
-              (stats.dartsThrown + 1) || 0
+          (stats.dartsThrown + 1) || 0
           : stats.average,
       dartsThrown: stats.dartsThrown + (index === winningPlayerIndex ? 1 : 0),
       totalScore:
@@ -122,7 +121,7 @@ function LocalLudoGame({
     const playerKey = players[playerIndex];
     setPlayerStats((prevPlayerStats) => ({
       ...prevPlayerStats,
-      [playerKey]: setLastThrows(playerStats[playerKey], []),
+      [playerKey]: setLastThrows(playerStats[playerKey], ""),
     }));
   };
 
@@ -132,22 +131,23 @@ function LocalLudoGame({
     multiplier: number
   ): void => {
     const formattedThrow = stringifyThrow(points, multiplier);
-    console.log("formattedThrow", formattedThrow);
     const playerKey = players[playerIndex];
+
     setPlayerStats((prevPlayerStats) => ({
       ...prevPlayerStats,
-      [playerKey]: setLastThrows(playerStats[playerKey], [
-        ...prevPlayerStats[playerKey].lastThrows,
+      [playerKey]: setLastThrows(playerStats[playerKey],
         formattedThrow,
-      ]),
+      ),
     }));
   };
 
   const setLastThrows = (
     playerStats: PlayerStats,
-    lastThrows: string[]
+    lastThrow: string
   ): PlayerStats => {
-    playerStats.lastThrows = lastThrows;
+    if (lastThrow) playerStats.lastThrows.push(lastThrow);
+    else playerStats.lastThrows.splice(0, playerStats.lastThrows.length)
+
     return playerStats;
   };
 
@@ -162,9 +162,10 @@ function LocalLudoGame({
       updatedScore < 0 ||
       (props.modeOut === "double" &&
         (multiplier === 1 || multiplier === 3) &&
-        updatedScore <= 1) ||
+        updatedScore <= 0) ||
       (multiplier === 2 && updatedScore === 1);
 
+      console.log('updatedScoreIsInvalid', updatedScoreIsInvalid)
     if (updatedScoreIsInvalid) {
       resetScoreToBeginningOfRound(playerIndex);
       props.switchToNextPlayer();
@@ -183,8 +184,6 @@ function LocalLudoGame({
   ): number => {
     const currentPlayerStats = playerStats[players[playerIndex]];
     const currentPlayerScore = currentPlayerStats.score;
-    console.log("currentPlayerScore", currentPlayerScore);
-    console.log("thrownPoints", thrownPoints);
     const updatedScore = currentPlayerScore + thrownPoints;
 
     return updatedScore;
@@ -196,7 +195,7 @@ function LocalLudoGame({
     thrownPoints: number
   ) => {
     const playerWon =
-      updatedScore === 0 && (props.modeOut !== "double" || multiplier === 2);
+      updatedScore === 301 && props.modeOut !== "double";
     if (playerWon) {
       props.cbPlayerHasWon(players[playerIndex]);
       setPlayerStats(
@@ -225,24 +224,18 @@ function LocalLudoGame({
     }));
 
     // Check if someone is killed
-    players.map((player, index) => {
-      console.log("player", player);
+    players.map((_, index) => {
       if (
         players[index] !== players[playerIndex] &&
         playerStats[players[index]].score !== 0
       ) {
-        console.log("playerStats[players[playerIndex]].score", newPoints.score);
-        console.log(
-          "playerStats[players[index]].score",
-          playerStats[players[index]].score
-        );
         if (newPoints.score === playerStats[players[index]].score) {
           setIsPlayerKilled(true);
           setPlayerKilled(players[index]);
           setPlayerStats((prevPlayerStats) => ({
             ...prevPlayerStats,
             [players[index]]: {
-              ...playerStats[players[playerIndex]],
+              ...playerStats[players[index]],
               score: 0,
             },
           }));
@@ -256,7 +249,7 @@ function LocalLudoGame({
     currentPlayerStats: PlayerStats
   ): PlayerStats => ({
     ...currentPlayerStats,
-    score: currentPlayerStats.score + thrownPoints,
+    score: calculateNewScore(thrownPoints, currentPlayerStats),
     totalScore: currentPlayerStats.totalScore + thrownPoints,
     dartsThrown: currentPlayerStats.dartsThrown + 1,
     turns:
@@ -270,6 +263,20 @@ function LocalLudoGame({
       (r) => sumRound(r) === currentPlayerStats.score - thrownPoints
     ),
   });
+
+  const calculateNewScore = (thrownPoints: number,
+    currentPlayerStats: PlayerStats) => {
+      const total = currentPlayerStats.score + thrownPoints;
+      let newScore = 0;
+      if (total > 301) {
+        const rest = total - 301;
+        newScore = 301 - rest;
+      } else {
+        newScore = total;
+      }
+
+    return newScore;
+  }
 
   const resetScoreToBeginningOfRound = (playerIndex: number) => {
     setPlayerStats((prevPlayerStats) => ({
@@ -345,6 +352,7 @@ function LocalLudoGame({
       cbHandleMultiplierClicked={handleMultiplierClick}
       cbHandleUndoClicked={handleUndoClick}
       modeOut={props.modeOut}
+      throwsRemaining={throwsRemaining}
     />
   );
 }

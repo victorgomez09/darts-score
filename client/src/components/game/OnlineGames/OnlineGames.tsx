@@ -1,94 +1,66 @@
 import { useEffect, useState } from "react";
+import { Gamemode, InAndOutMode } from "../../../types/global";
 import {
   PlayerToPlayerStats,
   PlayerToPlayerStatsCricket,
   PlayerToPlayerStatsRCl,
   PlayerToPlayerTotalGameStats,
 } from "../../../types/playerStats.ts";
-import YesNoPopUp from "../../popUps/YesNoPopUp/YesNoPopUp.tsx";
-import "../../../styles/Games.css";
 import NavigationButtons from "../../buttons/NavigationButtons/NavigationButtons.tsx";
-import OnlineStandardGames from "../../onlineGamemodes/OnlineStandardGames/OnlineStandardGames.tsx";
-import OnlineRoundTheClockGame from "../../onlineGamemodes/OnlineRoundTheClockGame/OnlineRoundTheClockGame.tsx";
-import OnlineCricketGame from "../../onlineGamemodes/OnlineCricketGame/OnlineCricketGame.tsx";
-import { OnlineGamesProps } from "./OnlineGames";
 import GameInformationHeader from "../../gameInformationHeader/GameInformationHeader.tsx";
-import { DGameData } from "../../../pages/onlineMultiplayer/OnlineMultiplayer/OnlineMultiplayerDTOs.tsx";
+import OnlineCricketGame from "../../onlineGamemodes/OnlineCricketGame/OnlineCricketGame.tsx";
+import { DPlayer } from "../../onlineGamemodes/OnlineGameProps.ts";
+import OnlineLudoGame from "../../onlineGamemodes/OnlineLudoGame/OnlineLudoGames.tsx";
+import OnlineRoundTheClockGame from "../../onlineGamemodes/OnlineRoundTheClockGame/OnlineRoundTheClockGame.tsx";
+import OnlineStandardGames from "../../onlineGamemodes/OnlineStandardGames/OnlineStandardGames.tsx";
 import EndGamePopUp from "../../popUps/EndGamePopUp/EndGamePopUp.tsx";
-import OnlineLudoGame from "../../onlineGamemodes/OnlineLudoGame/OnlineStandardGames.tsx";
+import YesNoPopUp from "../../popUps/YesNoPopUp/YesNoPopUp.tsx";
+
+export interface OnlineGamesProps {
+  selectedGamemode: Gamemode;
+  players: DPlayer[];
+  cbBackBtnClicked(): void;
+  setsToWin: number;
+  legsForSet: number;
+  modeIn: InAndOutMode;
+  modeOut: InAndOutMode;
+  initialGameStats: DGameData;
+}
+
+export interface DGameData {
+  currentRound: number;
+  startingPlayerIndex: number;
+  currentPlayerIndex: number;
+  throwsRemaining: number;
+  playerStats: PlayerToPlayerStats | PlayerToPlayerStatsRCl | PlayerToPlayerStatsCricket;
+  totalGameStats: PlayerToPlayerTotalGameStats;
+  winner: string | null;
+}
 
 function OnlineGames(props: OnlineGamesProps) {
   const [showGoToMainMenuPopUp, setShowGoToMainMenuPopUp] =
     useState<boolean>(false);
-  const [playerTotalGameStats, setPlayerTotalGameStats] =
-    useState<PlayerToPlayerTotalGameStats>(
-      props.initialGameStats.totalGameStats
-    );
-  const [throwsRemaining, setThrowsRemaining] = useState<number>(
-    props.initialGameStats.throwsRemaining
-  );
-  const [currentRound, setCurrentRound] = useState<number>(
-    props.initialGameStats.currentRound
-  );
-  const [startingPlayerIndex, setStartingPlayerIndex] = useState<number>(
-    props.initialGameStats.startingPlayerIndex
-  );
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(
-    props.initialGameStats.currentPlayerIndex
-  );
   const [playerStats, setPlayerStats] = useState<
     PlayerToPlayerStats | PlayerToPlayerStatsRCl | PlayerToPlayerStatsCricket
   >(props.initialGameStats.playerStats);
   const [winningPlayer, setWinningPlayer] = useState<string | null>(null);
 
-  const checkIsPlayersTurn = (currentPlayerIndex: number): boolean => {
-    return props.players[currentPlayerIndex].userID === props.displayUserID;
-  };
-  const [isPlayersTurn, setIsPlayersTurn] = useState<boolean>(
-    checkIsPlayersTurn(props.initialGameStats.currentPlayerIndex)
-  );
-
-  useEffect(() => {
-    const handleStatsUpdated = (data: DGameData) => {
-      setPlayerTotalGameStats(data.totalGameStats);
-      setPlayerStats(data.playerStats);
-      setThrowsRemaining(data.throwsRemaining);
-      setCurrentRound(data.currentRound);
-      setStartingPlayerIndex(data.startingPlayerIndex);
-      setCurrentPlayerIndex(data.currentPlayerIndex);
-      setIsPlayersTurn(checkIsPlayersTurn(data.currentPlayerIndex));
-
-      if (data.winner) {
-        setWinningPlayer(data.winner);
-      }
-    };
-
-    props.socket.on("gameStatsUpdated", handleStatsUpdated);
-
-    return () => {
-      props.socket.off("gameStatsUpdated", handleStatsUpdated);
-    };
-  }, [props.socket]);
-
   const gameProps = {
-    isLoggedIn: props.isLoggedIn,
-    socket: props.socket,
-    lobbyCode: props.lobbyCode,
     players: props.players,
-    playerTotalGameStats: playerTotalGameStats,
-    throwsRemaining: throwsRemaining,
-    currentRound: currentRound,
-    startingPlayerIndex: startingPlayerIndex,
-    currentPlayerIndex: currentPlayerIndex,
-    isPlayersTurn: isPlayersTurn,
+    playerTotalGameStats: props.initialGameStats.totalGameStats,
+    throwsRemaining: props.initialGameStats.throwsRemaining,
+    currentRound: props.initialGameStats.currentRound,
+    startingPlayerIndex: props.initialGameStats.startingPlayerIndex,
+    currentPlayerIndex: props.initialGameStats.currentPlayerIndex,
+    isPlayersTurn: props.initialGameStats.currentPlayerIndex,
   };
 
   return (
-    <div className="App hero is-flex is-justify-content-center is-align-items-center is-fullheight">
+    <div className="flex items-center p-2">
       {winningPlayer && (
         <EndGamePopUp
           winnerName={winningPlayer}
-          totalGameStats={playerTotalGameStats[winningPlayer]}
+          totalGameStats={props.initialGameStats.totalGameStats[winningPlayer]}
           gameType={"online"}
           gamemode={props.selectedGamemode}
           cbBtnClicked={props.cbBackBtnClicked}
@@ -102,7 +74,7 @@ function OnlineGames(props: OnlineGamesProps) {
         />
       )}
       <GameInformationHeader
-        throwsRemaining={throwsRemaining}
+        throwsRemaining={props.initialGameStats.throwsRemaining}
         setsToWin={props.setsToWin}
         legsForSet={props.legsForSet}
         modeIn={
@@ -118,12 +90,12 @@ function OnlineGames(props: OnlineGamesProps) {
       />
       {(props.selectedGamemode === "301" ||
         props.selectedGamemode === "501") && (
-        <OnlineStandardGames
-          {...gameProps}
-          modeOut={props.modeOut}
-          playerStats={playerStats as PlayerToPlayerStats}
-        />
-      )}
+          <OnlineStandardGames
+            {...gameProps}
+            modeOut={props.modeOut}
+            playerStats={playerStats as PlayerToPlayerStats}
+          />
+        )}
       {props.selectedGamemode === "rcl" && (
         <OnlineRoundTheClockGame
           {...gameProps}

@@ -33,21 +33,24 @@ function PlayersAndSettings(props: PlayersAndSettingsProps) {
           setModeOut={props.setModeOut}
         />
       ) : (
-        <div className="hero is-justify-content-center is-align-items-center is-fullheight">
-          <div className="hero-body">
-            <div className="container box">
-              <PlayerMenu
-                players={props.players}
-                maxPlayers={props.maxPlayers}
-                setPlayers={props.setPlayers}
-                isEditable={true}
-                playerCountInfo={props.playerCountInfo}
-              />
-              <NavigationButtons
-                cbBackBtnClicked={props.cbBackBtnClicked}
-                cbNextBtnClicked={handleNextForPlayerMenu}
-                nextBtnDisabled={!props.validNumberOfPlayers}
-              />
+        <div className="hero">
+          <div className="hero-content w-full h-full">
+            <div className="card !shadow bg-base-100 w-8/12">
+              <div className="card-body p-4">
+
+                <PlayerMenu
+                  players={props.players}
+                  maxPlayers={props.maxPlayers}
+                  setPlayers={props.setPlayers}
+                  isEditable={true}
+                  playerCountInfo={props.playerCountInfo}
+                />
+                <NavigationButtons
+                  cbBackBtnClicked={props.cbBackBtnClicked}
+                  cbNextBtnClicked={handleNextForPlayerMenu}
+                  nextBtnDisabled={!props.validNumberOfPlayers}
+                />
+              </div>
             </div>
           </div>
         </div>

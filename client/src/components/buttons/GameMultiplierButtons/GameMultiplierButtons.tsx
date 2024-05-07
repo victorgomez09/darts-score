@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { GameMultiplierButtonsProps } from "./GameMultiplierButtons";
-import "../../../styles/Games.css";
 
 function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
   useEffect(() => {
@@ -19,10 +18,10 @@ function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
   };
 
   return (
-    <div className="is-flex is-centered">
+    <div className="flex items-center">
       <button
-        className={`button is-info m-1 is-size-5 uniformButton ${
-          isCurrentlySelected(1) && !props.disabled ? "selectedButton" : ""
+        className={`btn btn-info m-1 ${
+          isCurrentlySelected(1) && !props.disabled ? "!btn-active border-2 border-primary-content" : ""
         }`}
         onClick={() => props.cbHandleMultiplierClicked(1)}
         disabled={props.disabled}
@@ -30,8 +29,8 @@ function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
         Single
       </button>
       <button
-        className={`button is-success m-1 is-size-5 uniformButton ${
-          isCurrentlySelected(2) && !props.disabled ? "selectedButton" : ""
+        className={`btn btn-success m-1 ${
+          isCurrentlySelected(2) && !props.disabled ? "!btn-active border-2 border-primary-content" : ""
         }`}
         onClick={() => props.cbHandleMultiplierClicked(2)}
         disabled={props.disabled}
@@ -39,8 +38,8 @@ function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
         Double
       </button>
       <button
-        className={`button is-warning m-1 is-size-5 uniformButton ${
-          isCurrentlySelected(3) && !props.disabled ? "selectedButton" : ""
+        className={`btn btn-warning m-1 ${
+          isCurrentlySelected(3) && !props.disabled ? "!btn-active border-2 border-primary-content" : ""
         }`}
         onClick={() => props.cbHandleMultiplierClicked(3)}
         disabled={props.disabled}

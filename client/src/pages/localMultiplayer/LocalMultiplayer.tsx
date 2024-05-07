@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Gamemode, InAndOutMode } from "../../types/global";
 
-import { LocalMultiplayerProps } from "./LocalMultiplayer";
 import LocalGames from "../../components/game/LocalGames/LocalGames.tsx";
 import PlayersAndSettings from "../../components/gameSettings/PlayersAndSettings/PlayersAndSettings.tsx";
 
+export interface LocalMultiplayerProps {
+  cbBackBtnClicked(): void;
+}
+
 function LocalMultiplayer(props: LocalMultiplayerProps) {
-  const [players, setPlayers] = useState([props.displayUserID ? props.displayUserID : "Player 1"]);
+  const [players, setPlayers] = useState(["Vira"]);
   const [selectedGamemode, setSelectedGamemode] = useState<Gamemode>("301");
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [setsToWin, setSetsToWin] = useState<number>(1);
@@ -24,7 +27,6 @@ function LocalMultiplayer(props: LocalMultiplayerProps) {
   };
 
   const gameProps = {
-    isLoggedIn: props.isLoggedIn,
     players: players,
     selectedGamemode: selectedGamemode,
     setsToWin: setsToWin,

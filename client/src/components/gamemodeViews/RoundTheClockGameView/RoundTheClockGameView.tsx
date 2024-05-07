@@ -1,6 +1,14 @@
 import { DPlayer } from "../../../pages/onlineMultiplayer/OnlineMultiplayer/OnlineMultiplayerDTOs.tsx";
 import PlayerScoreCard from "../../playerScoreCards/PlayerScoreCard/PlayerScoreCard.tsx";
-import { RoundTheClockGameViewProps } from "./RoundTheClockGameView";
+import { PlayerToPlayerStatsRCl } from "../../../types/playerStats.ts";
+import { GameViewProps } from "../GameView";
+
+export interface RoundTheClockGameViewProps extends GameViewProps {
+  playerStats: PlayerToPlayerStatsRCl;
+  cbHandleHitClicked(): void;
+  cbHandleMissClicked(): void;
+  cbHandleNextClicked(): void;
+}
 
 function RoundTheClockGameView(props: RoundTheClockGameViewProps) {
   const renderPlayerScoreCard = (player: string | DPlayer) => {
@@ -10,7 +18,6 @@ function RoundTheClockGameView(props: RoundTheClockGameViewProps) {
 
     return (
       <PlayerScoreCard
-        isLoggedIn={props.isLoggedIn}
         key={userID}
         playerName={userID}
         isStartingPlayer={isStartingPlayer}

@@ -1,62 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import "../../../styles/Menu.css";
-import logo from "../../../assets/logo.svg";
-import { MainMenuProps } from "./MainMenu";
-import ErrorMessageBoxButton from "../../../components/buttons/ErrorMessageBoxButton/ErrorMessageBoxButton.tsx";
 
-function MainMenu(props: MainMenuProps) {
+function MainMenu() {
   const navigate = useNavigate();
 
-  const errorMessageBoxButtonProps = {
-    className: "button is-primary m-1 is-large sideBySideMenuBtn",
-    messageContent: "Log in to access",
-    disabled: !props.isLoggedIn
-  };
-
   return (
-    <div className="hero is-justify-content-center is-align-items-center is-fullheight">
-      <div className="hero-body">
-        <div className="container box">
-          <div className="column is-flex is-justify-content-center">
-            <img src={logo} style={{ width: "400px" }} alt={""} />
-          </div>
-          <div className="buttons is-centered">
-            <button className="button is-primary m-1 is-large is-fullwidth" onClick={() => navigate("/singleplayer")}>
-              Singleplayer
-            </button>
-            <button className="button is-primary m-1 is-large is-fullwidth" onClick={() => navigate("/multiplayer")}>
-              Mulitplayer
-            </button>
-            <button className="button is-primary m-1 is-large is-fullwidth" onClick={() => navigate("/tournament")}>
-              Tournament
-            </button>
-            <button
-              className="button is-primary m-1 is-large is-fullwidth"
-              onClick={() => navigate("/checkoutCalculator")}
-            >
-              Checkouts
-            </button>
-          </div>
-          <div className="buttons is-centered">
-            <ErrorMessageBoxButton
-              cbBtnClicked={() => navigate("/statistics")}
-              btnContent="Statistics"
-              {...errorMessageBoxButtonProps}
-            />
-            <ErrorMessageBoxButton
-              cbBtnClicked={() => navigate("/settings")}
-              btnContent="Settings"
-              {...errorMessageBoxButtonProps}
-            />
-          </div>
-          {!props.isLoggedIn && (
-            <div className="buttons is-centered">
-              <button className="button is-primary m-1 is-large" onClick={() => navigate("/login")}>
-                Login
-              </button>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content w-full">
+          <div className="card !shadow bg-base-100 w-8/12">
+            <div className="card-body">
+              <h3 className="card-title justify-center">Dardos VIRA</h3>
+              <div className="flex flex-col items-center gap-4">
+                <button className="btn btn-primary btn-block" onClick={() => navigate("/singleplayer")}>
+                  Singleplayer
+                </button>
+                <button className="btn btn-primary btn-block" onClick={() => navigate("/multiplayer")}>
+                  Mulitplayer
+                </button>
+                <button className="btn btn-primary btn-block" onClick={() => navigate("/tournament")}>
+                  Tournament
+                </button>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
       </div>
     </div>
   );

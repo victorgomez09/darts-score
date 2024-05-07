@@ -1,5 +1,10 @@
+import React from "react";
 import { Gamemode } from "../../../types/global";
-import { GamemodeSelectionProps } from "./GamemodeSelection";
+
+export interface GamemodeSelectionProps {
+  selectedGamemode: Gamemode;
+  setSelectedGamemode: React.Dispatch<React.SetStateAction<Gamemode>>;
+}
 
 function GamemodeSelection(props: GamemodeSelectionProps) {
   const handleMenuClick = (gamemode: Gamemode) => {
@@ -12,69 +17,37 @@ function GamemodeSelection(props: GamemodeSelectionProps) {
 
   return (
     <>
-      <div className="column is-flex is-justify-content-center">
-        <h1 className="is-size-4 mb-3">Choose Gamemode</h1>
+      <div className="text-center">
+        <h1 className="text-lg front-semibold mb-3">Choose Gamemode</h1>
       </div>
-      <div className="buttons is-centered">
+      <div className="flex flex-wrap gap-2">
         <button
-          className="button is-primary m-1 is-large sideBySideMenuBtn"
+          className={`btn btn-primary m-1 ${isCurrentlySelected("301") ? 'btn-secondary' : ''}`}
           onClick={() => handleMenuClick("301")}
-          style={{
-            boxShadow: isCurrentlySelected("301")
-              ? "inset #00574a 0px 0px 6px 1px"
-              : "",
-            background: isCurrentlySelected("301") ? "#00b197" : "#00d1b2",
-          }}
         >
           301
         </button>
         <button
-          className="button is-primary m-1 is-large sideBySideMenuBtn"
+          className={`btn btn-primary m-1 ${isCurrentlySelected("501") ? 'btn-secondary' : ''}`}
           onClick={() => handleMenuClick("501")}
-          style={{
-            boxShadow: isCurrentlySelected("501")
-              ? "inset #00574a 0px 0px 4px 1px"
-              : "",
-            background: isCurrentlySelected("501") ? "#00b197" : "#00d1b2",
-          }}
         >
           501
         </button>
-      </div>
-      <div className="buttons is-centered">
         <button
-          className="button is-primary m-1 is-large sideBySideMenuBtn"
+          className={`btn btn-primary m-1 ${isCurrentlySelected("rcl") ? 'btn-secondary' : ''}`}
           onClick={() => handleMenuClick("rcl")}
-          style={{
-            boxShadow: isCurrentlySelected("rcl")
-              ? "inset #00574a 0px 0px 4px 1px"
-              : "",
-            background: isCurrentlySelected("rcl") ? "#00b197" : "#00d1b2",
-          }}
         >
           rCl
         </button>
         <button
-          className="button is-primary m-1 is-large sideBySideMenuBtn"
+          className={`btn btn-primary m-1 ${isCurrentlySelected("cri") ? 'btn-secondary' : ''}`}
           onClick={() => handleMenuClick("cri")}
-          style={{
-            boxShadow: isCurrentlySelected("cri")
-              ? "inset #00574a 0px 0px 4px 1px"
-              : "",
-            background: isCurrentlySelected("cri") ? "#00b197" : "#00d1b2",
-          }}
         >
-          Cri
+          Cricket
         </button>
         <button
-          className="button is-primary m-1 is-large sideBySideMenuBtn"
+          className={`btn btn-primary m-1 ${isCurrentlySelected("ludo") ? 'btn-secondary' : ''}`}
           onClick={() => handleMenuClick("ludo")}
-          style={{
-            boxShadow: isCurrentlySelected("ludo")
-              ? "inset #00574a 0px 0px 4px 1px"
-              : "",
-            background: isCurrentlySelected("ludo") ? "#00b197" : "#00d1b2",
-          }}
         >
           Ludo
         </button>

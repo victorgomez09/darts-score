@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { PlayerToPlayerTotalGameStats } from "../../../types/playerStats.ts";
-
-import "../../../styles/Games.css";
 import NavigationButtons from "../../buttons/NavigationButtons/NavigationButtons.tsx";
 import GameInformationHeader from "../../gameInformationHeader/GameInformationHeader.tsx";
-import { LocalGamesProps } from "./LocalGames";
 import LocalStandardGames from "../../localGamemodes/LocalStandardGames/LocalStandardGames.tsx";
 import LocalRoundTheClockGame from "../../localGamemodes/LocalRoundTheClockGame/LocalRoundTheClockGame.tsx";
 import LocalCricketGame from "../../localGamemodes/LocalCricketGame/LocalCricketGame.tsx";
 import EndGamePopUp from "../../popUps/EndGamePopUp/EndGamePopUp.tsx";
 import YesNoPopUp from "../../popUps/YesNoPopUp/YesNoPopUp.tsx";
 import LocalLudoGame from "../../localGamemodes/LocalLudoGame/LocalLudoGame.tsx";
+import { GameType, Gamemode, InAndOutMode } from "../../../types/global";
+
+export interface LocalGamesProps {
+  selectedGamemode: Gamemode;
+  players: string[];
+  cbBackBtnClicked(): void;
+  setsToWin: number;
+  legsForSet: number;
+  modeIn: InAndOutMode;
+  modeOut: InAndOutMode;
+  gameType: GameType;
+  cbPlayerWon?(player: string): void;
+}
 
 const initializePlayerTotalGameStats = (
   players: string[]
@@ -119,7 +129,6 @@ function LocalGames(props: LocalGamesProps) {
   };
 
   const gameProps = {
-    isLoggedIn: props.isLoggedIn,
     players: props.players,
     playerTotalGameStats: playerTotalGameStats,
     setsToWin: props.setsToWin,
@@ -156,7 +165,7 @@ function LocalGames(props: LocalGamesProps) {
   }, []);
 
   return (
-    <div className="App hero is-flex is-justify-content-center is-align-items-center is-fullheight">
+    <div className="flex flex-col justify-center items-center p-2 w-full h-full">
       {winningPlayer && (
         <EndGamePopUp
           winnerName={winningPlayer}
@@ -192,6 +201,7 @@ function LocalGames(props: LocalGamesProps) {
         <LocalStandardGames
           {...gameProps}
           {...standardGamesProps}
+          throwsRemaining={throwsRemaining}
           gamemodeTotalScore={301}
         />
       )}
@@ -199,6 +209,7 @@ function LocalGames(props: LocalGamesProps) {
         <LocalStandardGames
           {...gameProps}
           {...standardGamesProps}
+          throwsRemaining={throwsRemaining}
           gamemodeTotalScore={501}
         />
       )}
@@ -207,8 +218,9 @@ function LocalGames(props: LocalGamesProps) {
       )}
       {props.selectedGamemode === "cri" && <LocalCricketGame {...gameProps} />}
       {props.selectedGamemode === "ludo" && (
-        <LocalLudoGame {...gameProps} {...standardGamesProps} />
+        <LocalLudoGame {...gameProps} {...standardGamesProps} throwsRemaining={throwsRemaining} />
       )}
+      
       <NavigationButtons
         cbBackBtnClicked={() => setShowGoToMainMenuPopUp(true)}
         marginTop={0}

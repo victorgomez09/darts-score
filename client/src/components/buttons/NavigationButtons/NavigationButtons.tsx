@@ -1,17 +1,24 @@
-import { NavigationButtonsProps } from "./NavigationButtons";
-import "../../../styles/Games.css";
+export interface NavigationButtonsProps {
+  cbBackBtnClicked?(): void;
+  cbNextBtnClicked?(): void;
+  contentBackBtn?: string;
+  contentNextBtn?: string;
+  nextBtnDisabled?: boolean;
+  marginTop?: number;
+  showNextBtn?: boolean;
+}
 
 function NavigationButtons(props: NavigationButtonsProps) {
   return (
-    <div className={`buttons is-flex is-centered mt-${props.marginTop ?? 5} mb-2`}>
+    <div className={`flex items-center justify-center mt-${props.marginTop ?? 5} mb-2`}>
       {props.cbBackBtnClicked && (
-        <button className="button is-danger m-1 is-medium uniformButton" onClick={props.cbBackBtnClicked}>
+        <button className="btn btn-error m-1" onClick={props.cbBackBtnClicked}>
           {props.contentBackBtn ? props.contentBackBtn : "Back"}
         </button>
       )}
       {(props.showNextBtn ?? true) && props.cbNextBtnClicked && (
         <button
-          className="button is-primary m-1 is-medium uniformButton"
+          className="btn btn-success m-1"
           onClick={props.cbNextBtnClicked}
           disabled={props.nextBtnDisabled ?? false}
         >

@@ -5,10 +5,9 @@ import PlayersAndSettings from "../../components/gameSettings/PlayersAndSettings
 import { useNavigate } from "react-router-dom";
 import PopUp from "../../components/popUps/PopUp/PopUp.tsx";
 import EndGamePopUp from "../../components/popUps/EndGamePopUp/EndGamePopUp.tsx";
-import { TournamentProps } from "./Tournament";
 
-function Tournament(props: TournamentProps) {
-  const [allPlayers, setAllPlayers] = useState([props.displayUserID ? props.displayUserID : "Player 1"]);
+function Tournament() {
+  const [allPlayers, setAllPlayers] = useState(["Vira"]);
   const [waitingPlayers, setWaitingPlayers] = useState<string[]>([]);
   const [currentPlayers, setCurrentPlayers] = useState<string[]>([]);
   const [winners, setWinners] = useState<string[]>([]);
@@ -128,7 +127,6 @@ function Tournament(props: TournamentProps) {
       {gameStarted ? (
         <LocalGames
           {...gameProps}
-          isLoggedIn={props.isLoggedIn}
           gameType="tournament"
           players={currentPlayers}
           cbBackBtnClicked={handleBackToPlayerMenu}

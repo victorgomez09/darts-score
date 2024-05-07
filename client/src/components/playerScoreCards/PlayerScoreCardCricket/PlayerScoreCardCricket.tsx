@@ -1,4 +1,3 @@
-import "../../../styles/CricketSymbols.css";
 import { PlayerScoreCardCricketProps } from "./PlayerScoreCardCricket";
 import { CricketStatus } from "../../../types/playerStats";
 

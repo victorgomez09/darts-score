@@ -21,116 +21,91 @@ function GameSettings(props: GameSettingsProps) {
   };
 
   return (
-    <div style={{ minWidth: "300px" }}>
-      <div className="column is-flex is-justify-content-center">
-        <h1 className="is-size-4 mb-1">Settings</h1>
-      </div>
-      <div className="column is-flex is-justify-content-center pb-2 pt-0">
-        <h1 className="is-size-5">First to:</h1>
-      </div>
-      <div className="column mt-0 pt-0">
-        <div className="is-flex is-justify-content-center mb-3">
-          <div
-            className="field is-grouped is-justify-content-space-between"
-            style={{ minWidth: "140px", width: "60%" }}
-          >
-            <p className="mr-4" style={{ lineHeight: "40px" }}>
-              Sets:
-            </p>
-            <div className="control" style={{ width: "60%" }}>
-              <input
-                className="input"
-                type="number"
-                min="1"
-                max="20"
-                value={props.setsToWin}
-                onChange={handleInputChangeSets}
-                placeholder="Enter sets"
-              />
+    <div>
+      <h1 className="text-center font-semibold text-lg mb-1">Settings</h1>
+      <div className="flex flex-col gap-2">
+        <h1>First to:</h1>
+        <div className="flex items-center gap-2">
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Sets:</span>
             </div>
-          </div>
-        </div>
-        <div className="is-flex is-justify-content-center">
-          <div
-            className="field is-grouped is-justify-content-space-between"
-            style={{ minWidth: "140px", width: "60%" }}
-          >
-            <p className="mr-4" style={{ lineHeight: "40px" }}>
-              Legs:
-            </p>
-            <div className="control" style={{ width: "60%" }}>
-              <input
-                className="input"
-                type="number"
-                min="1"
-                max="10"
-                value={props.legsForSet}
-                onChange={handleInputChangeLegs}
-                placeholder="Enter legs"
-              />
+            <input
+              className="input input-bordered w-full max-w-xs"
+              type="number"
+              min="1"
+              max="20"
+              value={props.setsToWin}
+              onChange={handleInputChangeSets} />
+          </label>
+
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Legs:</span>
             </div>
-          </div>
+            <input
+              className="input input-bordered w-full max-w-xs"
+              type="number"
+              min="1"
+              max="10"
+              value={props.legsForSet}
+              onChange={handleInputChangeLegs} />
+          </label>
         </div>
-        {props.isError && (
-          <p className="has-text-danger mt-2" style={{ textAlign: "center" }}>
-            Invalid input
-          </p>
-        )}
       </div>
       {(props.selectedGamemode === "301" ||
         props.selectedGamemode === "501" ||
         props.selectedGamemode === "ludo") && (
-        <>
-          <div className="columns is-flex mt-3">
-            <div className="column ml-2">
-              <label className="checkbox">
-                <input
-                  className="checkbox mr-2"
-                  type="checkbox"
-                  checked={props.modeIn === "straight"}
-                  onChange={() => handleCheckboxModeInChange("straight")}
-                />
-                Straight In
-              </label>
+          <>
+            <div className="divider opacity-55 p-0 m-0"></div>
+
+            <div className="flex flex-col">
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Straight In</span>
+                  <input className="checkbox checkbox-primary"
+                    type="checkbox"
+                    checked={props.modeIn === "straight"}
+                    onChange={() => handleCheckboxModeInChange("straight")} />
+                </label>
+              </div>
+
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Double In</span>
+                  <input className="checkbox checkbox-primary"
+                    type="checkbox"
+                    checked={props.modeIn === "double"}
+                    onChange={() => handleCheckboxModeInChange("double")} />
+                </label>
+              </div>
             </div>
-            <div className="column">
-              <label className="checkbox">
-                <input
-                  className="checkbox mr-2"
-                  type="checkbox"
-                  checked={props.modeIn === "double"}
-                  onChange={() => handleCheckboxModeInChange("double")}
-                />
-                Double In
-              </label>
+
+            <div className="divider opacity-55 p-0 m-0"></div>
+
+            <div className="flex flex-col">
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Straight Out</span>
+                  <input className="checkbox checkbox-primary"
+                    type="checkbox"
+                    checked={props.modeOut === "straight"}
+                    onChange={() => handleCheckboxModeOutChange("straight")} />
+                </label>
+              </div>
+
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Double Out</span>
+                  <input className="checkbox checkbox-primary"
+                    type="checkbox"
+                    checked={props.modeOut === "double"}
+                    onChange={() => handleCheckboxModeOutChange("double")} />
+                </label>
+              </div>
             </div>
-          </div>
-          <div className="columns is-flex">
-            <div className="column ml-2">
-              <label className="checkbox">
-                <input
-                  className="checkbox mr-2"
-                  type="checkbox"
-                  checked={props.modeOut === "straight"}
-                  onChange={() => handleCheckboxModeOutChange("straight")}
-                />
-                Straight Out
-              </label>
-            </div>
-            <div className="column">
-              <label className="checkbox">
-                <input
-                  className="checkbox mr-2"
-                  type="checkbox"
-                  checked={props.modeOut === "double"}
-                  onChange={() => handleCheckboxModeOutChange("double")}
-                />
-                Double Out
-              </label>
-            </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
     </div>
   );
 }

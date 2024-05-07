@@ -1,8 +1,7 @@
-import { DPlayer } from "../../pages/onlineMultiplayer/OnlineMultiplayer/OnlineMultiplayerDTOs.tsx";
 import { PlayerToPlayerTotalGameStats } from "../../types/playerStats.ts";
+import { DPlayer } from "../onlineGamemodes/OnlineGameProps.ts";
 
 export interface GameViewProps {
-  isLoggedIn?: boolean;
   currentRound: number;
   players: string[] | DPlayer[];
   startingPlayerIndex: number;

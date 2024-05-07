@@ -13,18 +13,11 @@ function OnlineLudoGame(props: OnlineLudoGameProps) {
   const [multiplier, setMultiplier] = useState<number>(1);
 
   const handleScoreBtnClicked = (points: number) => {
-    if (!props.isPlayersTurn || (multiplier === 3 && points === 25)) return;
-
-    props.socket.emit("game:sendGameInputFromPlayer", {
-      lobbyCode: props.lobbyCode,
-      multiplier: multiplier,
-      points: points,
-    });
+    if ((multiplier === 3 && points === 25)) return;
   };
 
   return (
     <LudoGameView
-      isLoggedIn={props.isLoggedIn}
       currentRound={props.currentRound}
       players={props.players}
       startingPlayerIndex={props.startingPlayerIndex}
@@ -34,8 +27,8 @@ function OnlineLudoGame(props: OnlineLudoGameProps) {
       cbHandleScoreBtnClicked={handleScoreBtnClicked}
       multiplier={multiplier}
       cbHandleMultiplierClicked={setMultiplier}
-      isPlayersTurn={props.isPlayersTurn}
       modeOut={props.modeOut}
+      throwsRemaining={props.throwsRemaining}
     />
   );
 }

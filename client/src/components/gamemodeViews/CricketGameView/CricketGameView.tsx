@@ -1,8 +1,13 @@
-import { DPlayer } from "../../../pages/onlineMultiplayer/OnlineMultiplayer/OnlineMultiplayerDTOs.tsx";
+import { PlayerToPlayerStatsCricket } from "../../../types/playerStats.ts";
 import GameInputButtons from "../../buttons/GameInputButtons/GameInputButtons.tsx";
 import GameMultiplierButtons from "../../buttons/GameMultiplierButtons/GameMultiplierButtons.tsx";
+import { DPlayer } from "../../onlineGamemodes/OnlineGameProps.ts";
 import PlayerScoreCardCricket from "../../playerScoreCards/PlayerScoreCardCricket/PlayerScoreCardCricket.tsx";
-import { CricketGameViewProps } from "./CricketGameView";
+import { GameViewWithScoreProps } from "../GameView";
+
+export interface CricketGameViewProps extends GameViewWithScoreProps {
+  playerStats: PlayerToPlayerStatsCricket;
+}
 
 function CricketGameView(props: CricketGameViewProps) {
   const renderPlayerScoreCard = (player: string | DPlayer) => {
@@ -39,7 +44,7 @@ function CricketGameView(props: CricketGameViewProps) {
         <div className="column">
           {
             <GameInputButtons
-              values={[...Array(6).keys()].map((num) => 20 - num).concat(25)}
+              values={[...Array(5).keys()].map((num) => 20 - num).concat(24)}
               cbHandleButtonClicked={props.cbHandleScoreBtnClicked}
               showMissButton={true}
               btnSize={60}

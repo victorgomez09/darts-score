@@ -1,12 +1,10 @@
-import "../../../styles/Menu.css";
 import { useState } from "react";
 import { Gamemode, InAndOutMode } from "../../../types/global";
 import LocalGames from "../../../components/game/LocalGames/LocalGames.tsx";
 import { useNavigate } from "react-router-dom";
 import SettingsMenu from "../../../components/gameSettings/SettingsMenu/SettingsMenu.tsx";
-import { SingleplayerProps } from "./Singleplayer";
 
-function Singleplayer(props: SingleplayerProps) {
+function Singleplayer() {
   const navigate = useNavigate();
   const [selectedGamemode, setSelectedGamemode] = useState<Gamemode>("301");
   const [gameStarted, setGameStarted] = useState<boolean>(false);
@@ -34,9 +32,8 @@ function Singleplayer(props: SingleplayerProps) {
       {gameStarted ? (
         <LocalGames
           {...gameProps}
-          isLoggedIn={props.isLoggedIn}
           gameType={"singleplayer"}
-          players={[props.displayUserID ? `${props.displayUserID}` : "You"]}
+          players={["You"]}
           cbBackBtnClicked={backBtnGameClicked}
         />
       ) : (

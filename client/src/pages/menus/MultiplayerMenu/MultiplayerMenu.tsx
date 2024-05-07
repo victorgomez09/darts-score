@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import NavigationButtons from "../../../components/buttons/NavigationButtons/NavigationButtons.tsx";
 import { MultiplayerMode } from "../../../types/global";
-import { MultiplayerModeProps } from "./MultiplayerMenu";
+
+export interface MultiplayerModeProps {
+  cbMultiplayerModeSelected(multiplayerMode: MultiplayerMode): void;
+}
 
 function MultiplayerMenu(props: MultiplayerModeProps) {
   const navigate = useNavigate();
