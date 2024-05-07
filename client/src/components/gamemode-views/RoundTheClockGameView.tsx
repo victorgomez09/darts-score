@@ -38,7 +38,7 @@ function RoundTheClockGameView(props: RoundTheClockGameViewProps) {
     <>
       <div className="is-centered roundsInfo">
         <p className="is-size-3 mb-3" style={{ textAlign: "center" }}>
-          Round: {props.currentRound}
+          Ronda: {props.currentRound}
         </p>
       </div>
       <div className="columns is-centered playerCardsContainer">

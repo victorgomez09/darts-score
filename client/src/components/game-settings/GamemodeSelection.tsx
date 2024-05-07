@@ -18,7 +18,7 @@ function GamemodeSelection(props: GamemodeSelectionProps) {
   return (
     <>
       <div className="text-center">
-        <h1 className="text-lg font-semibold mb-3">Choose Gamemode</h1>
+        <h1 className="text-lg font-semibold mb-3">Elige el modo de juego</h1>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-2">
         <button
@@ -59,7 +59,7 @@ function GamemodeSelection(props: GamemodeSelectionProps) {
           }`}
           onClick={() => handleMenuClick("ludo")}
         >
-          Ludo
+          Parchís
         </button>
       </div>
     </>

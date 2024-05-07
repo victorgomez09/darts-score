@@ -62,7 +62,7 @@ function LudoGameView(props: LudoGameViewProps) {
         <div className="card !shadow bg-base-100 w-full">
           <div className="card-body p-4">
             <h1 className="card-title text-xl font-semibold justify-center">
-              Round: {props.currentRound}
+              Ronda: {props.currentRound}
             </h1>
           </div>
         </div>

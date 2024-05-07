@@ -52,7 +52,7 @@ function CricketGameView(props: CricketGameViewProps) {
       <div className="card !shadow bg-base-100 w-full">
         <div className="bg-body p-4">
           <p className="card-title justify-center">
-            Round: {props.currentRound}
+            Ronda: {props.currentRound}
           </p>
         </div>
       </div>

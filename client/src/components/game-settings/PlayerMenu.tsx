@@ -21,7 +21,7 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
       const truncatedPlayer = currentPlayer.substring(0, 20);
 
       if (players.includes(truncatedPlayer)) {
-        setError("Player already exists!");
+        setError("El jugador ya existe!");
         return;
       }
       if (setPlayers) setPlayers([...players, truncatedPlayer]);
@@ -42,23 +42,26 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
   };
   return (
     <div className="w-full">
-      <h1 className="text-center font-semibold mb-3">Player List</h1>
+      <h1 className="text-center font-semibold mb-3">List de jugadores</h1>
       <ul className="mb-1 mt-4 pr-3 pl-3 playerList">
         {players.map((player, index) => (
           <li key={index}>
             <div className="flex items-center justify-between">
-              <div>
-                {player}
-              </div>
+              <div>{player}</div>
               {props.isEditable && (
                 <div>
-                  <button className="btn btn-sm btn-error ml-2" onClick={() => deletePlayer(index)}>
-                    Delete
+                  <button
+                    className="btn btn-sm btn-warning ml-2"
+                    onClick={() => deletePlayer(index)}
+                  >
+                    💩
                   </button>
                 </div>
               )}
             </div>
-            {index != players.length - 1 && <div className="divider opacity-30 p-0 m-0"></div>}
+            {index != players.length - 1 && (
+              <div className="divider opacity-30 p-0 m-0"></div>
+            )}
           </li>
         ))}
       </ul>
@@ -68,22 +71,24 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
           <div className="divider"></div>
 
           <div className="flex items-center gap-2 flex-1 w-full">
-              <input
-                className={`input input-bordered w-full ${error && "input-error"}`}
-                type="text"
-                value={currentPlayer}
-                onChange={handleInputChange}
-                onKeyUp={onKeyPressed}
-                placeholder="Enter player name"
-                disabled={players.length === props.maxPlayers}
-              />
-              <button
-                className="btn btn-primary"
-                onClick={addPlayer}
-                disabled={players.length === props.maxPlayers}
-              >
-                Add Player
-              </button>
+            <input
+              className={`input input-bordered w-full ${
+                error && "input-error"
+              }`}
+              type="text"
+              value={currentPlayer}
+              onChange={handleInputChange}
+              onKeyUp={onKeyPressed}
+              placeholder="Nombre del jugador"
+              disabled={players.length === props.maxPlayers}
+            />
+            <button
+              className="btn btn-primary"
+              onClick={addPlayer}
+              disabled={players.length === props.maxPlayers}
+            >
+              Añadir
+            </button>
           </div>
           {error && (
             <p className="has-text-danger" style={{ textAlign: "center" }}>

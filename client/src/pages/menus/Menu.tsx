@@ -14,19 +14,19 @@ function MainMenu() {
                 className="btn btn-primary btn-block"
                 onClick={() => navigate("/singleplayer")}
               >
-                Singleplayer
+                Un jugador
               </button>
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => navigate("/multiplayer")}
               >
-                Multiplayer
+                Multijugador
               </button>
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => navigate("/tournament")}
               >
-                Tournament
+                Torneo
               </button>
             </div>
           </div>

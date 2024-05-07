@@ -26,7 +26,7 @@ function NavigationButtons(props: NavigationButtonsProps) {
           onClick={props.cbNextBtnClicked}
           disabled={props.nextBtnDisabled ?? false}
         >
-          {props.contentNextBtn ? props.contentNextBtn : "Next"}
+          {props.contentNextBtn ? props.contentNextBtn : "Siguiente"}
         </button>
       )}
     </div>

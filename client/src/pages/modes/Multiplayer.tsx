@@ -47,7 +47,7 @@ function Multiplayer() {
           {...gameProps}
           maxPlayers={8}
           validNumberOfPlayers={numberOfPlayersCondition()}
-          playerCountInfo="2-8 players required to start"
+          playerCountInfo="De 2 a 8 jugdores requeridos"
           setSelectedGamemode={setSelectedGamemode}
           setPlayers={setPlayers}
           setLegsForSet={setLegsForSet}

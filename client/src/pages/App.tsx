@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import MainMenu from "./menus/MainMenu.tsx";
+import MainMenu from "./menus/Menu.tsx";
 import Multiplayer from "./modes/Multiplayer.tsx";
 import Singleplayer from "./modes/Singleplayer.tsx";
 import Tournament from "./tournament/Tournament.tsx";

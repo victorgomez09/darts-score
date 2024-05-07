@@ -38,9 +38,30 @@ function GameSettings(props: GameSettingsProps) {
 
   return (
     <div>
-      <h1 className="text-center font-semibold text-lg mb-1">Settings</h1>
+      <h1 className="text-center font-semibold text-lg mb-1">
+        Ajustes del juego
+        <label
+          htmlFor="my_modal_7"
+          role="button"
+          className="btn btn-circle btn-ghost btn-xs text-info"
+        >
+          <svg
+            tabIndex={0}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="w-4 h-4 stroke-current"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </label>
+      </h1>
       <div className="flex flex-col gap-2">
-        <h1>First to:</h1>
         <div className="flex items-center gap-2">
           <label className="form-control w-full max-w-xs">
             <div className="label">
@@ -132,6 +153,28 @@ function GameSettings(props: GameSettingsProps) {
           </div>
         </>
       )}
+
+      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">Info 📖</h3>
+          <p className="py-4">
+            <ul>
+              <li>
+                <span className="font-semibold italic">LEG</span>: Cuando un
+                jugador coloca su marcador a cero, se lleva la partida.
+              </li>
+              <li>
+                <span className="font-semibold italic">SET</span>: Conjunto de
+                legs.
+              </li>
+            </ul>
+          </p>
+        </div>
+        <label className="modal-backdrop" htmlFor="my_modal_7">
+          Close
+        </label>
+      </div>
     </div>
   );
 }
