@@ -26,10 +26,10 @@ function PlayerScoreCardCricket(props: PlayerScoreCardCricketProps) {
   };
 
   return (
-    <div className={`column playerCardCricket ${props.disabled === true && "inactiveCard"}`}>
-      <div className="box" style={{ borderLeft: props.isCurrentPlayer ? "5px solid red" : "" }}>
-        <h1 className={`title is-5 ${props.isStartingPlayer && "red-dot"}`}>{props.playerName}</h1>
-        <table className="table is-bordered">
+    <div className={`card !shadow bg-base-100 ${props.disabled === true && "inactiveCard"} ${props.isCurrentPlayer ? 'border-l-4 border-l-primary' : ''}`}>
+      <div className="card-body p-4">
+        <h1 className="card-title">{props.playerName}</h1>
+        <table className="table">
           <thead>
             <tr>
               {tableHeaders.map((header: string) => (

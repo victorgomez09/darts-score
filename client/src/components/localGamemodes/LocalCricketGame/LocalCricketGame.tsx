@@ -41,6 +41,7 @@ function LocalCricketGame(props: LocalCricketGameProps) {
   };
 
   const updatePlayerStats = (playerIndex: number, points: number): void => {
+    console.log("points", points)
     if (points === 0) {
       props.updateRemainingThrows();
       return;
@@ -49,6 +50,9 @@ function LocalCricketGame(props: LocalCricketGameProps) {
     const statsKey = getCricketStatsKey(points);
     const playerKey = players[playerIndex];
     const currentCricketStatusValue = playerStats[playerKey].cricketStats[statsKey];
+    console.log('statsKey', statsKey)
+    console.log('playerKey', playerKey)
+    console.log('currentCricketStatusValue', currentCricketStatusValue)
 
     if (currentCricketStatusValue < 3) {
       updateCricketStatusAndScore(playerKey, points);
@@ -69,6 +73,10 @@ function LocalCricketGame(props: LocalCricketGameProps) {
 
     let timesHitted = multiplier;
     let updatedCricketStatus = playerStats[playerKey].cricketStats[statsKey];
+    console.log('-----------')
+    console.log('timesHitted', timesHitted)
+    console.log('updatedCricketStatus', updatedCricketStatus)
+    console.log('-----------')
 
     while (updatedCricketStatus < 3 && timesHitted > 0) {
       timesHitted--;
