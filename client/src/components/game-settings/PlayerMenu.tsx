@@ -42,7 +42,7 @@ function PlayerMenu({ players, setPlayers, ...props }: PlayerMenuProps) {
   };
   return (
     <div className="w-full">
-      <h1 className="text-center font-semibold mb-3">List de jugadores</h1>
+      <h1 className="text-center font-semibold mb-3">Lista de jugadores</h1>
       <ul className="mb-1 mt-4 pr-3 pl-3 playerList">
         {players.map((player, index) => (
           <li key={index}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllOptions, sumRound } from "../../../helpers/calcCheckouts.ts";
 import { stringifyThrow } from "../../../helpers/stringifyThrow.ts";
 import { InAndOutMode } from "../../../types/global.ts";
@@ -68,6 +68,11 @@ function LocalStandardGames({
   const [playerStats, setPlayerStats] = useState<PlayerToPlayerStats>(() =>
     initializePlayerStats(props.players, props.gamemodeTotalScore)
   );
+  const [playerWon, setPlayerWon] = useState<string>("");
+
+  useEffect(() => {
+    if (playerWon.length > 0) setTimeout(() => setPlayerWon(""), 5000);
+  }, [playerWon]);
 
   const handleScoreChange = (points: number): void => {
     if (multiplier === 3 && points === 25) return;
@@ -159,7 +164,8 @@ function LocalStandardGames({
       updatedScore < 0 ||
       (props.modeOut === "double" &&
         (multiplier === 1 || multiplier === 3) &&
-        updatedScore <= 1) ||
+        updatedScore === props.gamemodeTotalScore &&
+        throwsRemaining <= 1) ||
       (multiplier === 2 && updatedScore === 1);
 
     if (updatedScoreIsInvalid) {
@@ -193,6 +199,7 @@ function LocalStandardGames({
       updatedScore === 0 && (props.modeOut !== "double" || multiplier === 2);
     if (playerWon) {
       props.cbPlayerHasWon(players[playerIndex]);
+      setPlayerWon(players[playerIndex]);
       setPlayerStats(
         initializePlayerStats(
           props.players,
@@ -313,6 +320,7 @@ function LocalStandardGames({
       cbHandleUndoClicked={handleUndoClick}
       modeOut={props.modeOut}
       throwsRemaining={throwsRemaining}
+      playerWinner={playerWon}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CricketStatus,
   PlayerStatsCricket,
@@ -7,7 +7,11 @@ import {
 import CricketGameView from "../../gamemode-views/CricketGameView.tsx";
 import { BaseGameProps } from "./BaseGameProps.ts";
 
-export interface LocalCricketGameProps extends BaseGameProps {}
+export interface LocalCricketGameProps extends BaseGameProps {
+  setThrowsRemaining: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentRound: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPlayerIndex: React.Dispatch<React.SetStateAction<number>>;
+}
 
 const initializePlayerStats = (
   players: string[]
@@ -25,6 +29,7 @@ const initializePlayerStats = (
         15: 0,
         Bull: 0,
       },
+      throwsRemaining: 3,
     };
   });
   return initialPoints;
@@ -36,10 +41,19 @@ function LocalCricketGame(props: LocalCricketGameProps) {
   const [playerStats, setPlayerStats] = useState<PlayerToPlayerStatsCricket>(
     () => initializePlayerStats(props.players)
   );
+  const [previousPlayerStats, setPreviousPlayerStats] = useState<
+    PlayerStatsCricket | Record<string, never>
+  >({});
+  const [playerWon, setPlayerWon] = useState<string>("");
+
+  useEffect(() => {
+    if (playerWon.length > 0) setTimeout(() => setPlayerWon(""), 5000);
+  }, [playerWon]);
 
   const handleScoreBtnClicked = (points: number): void => {
     if (points === 25 && multiplier === 3) return;
 
+    savePreviousPlayerStats(props.currentPlayerIndex);
     updatePlayerStats(props.currentPlayerIndex, points);
 
     setMultiplier(1);
@@ -69,6 +83,13 @@ function LocalCricketGame(props: LocalCricketGameProps) {
     } else {
       props.updateRemainingThrows();
     }
+  };
+
+  const savePreviousPlayerStats = (playerIndex: number): void => {
+    setPreviousPlayerStats({
+      ...structuredClone(playerStats[players[playerIndex]]),
+      throwsRemaining: props.throwsRemaining,
+    });
   };
 
   const getCricketStatsKey = (points: number): string => {
@@ -202,6 +223,7 @@ function LocalCricketGame(props: LocalCricketGameProps) {
       playersScore >= highestScore
     ) {
       props.cbPlayerHasWon(playerKey);
+      setPlayerWon(playerKey);
       setPlayerStats(initializePlayerStats(props.players));
     } else {
       props.updateRemainingThrows();
@@ -237,6 +259,51 @@ function LocalCricketGame(props: LocalCricketGameProps) {
     return closedAll;
   };
 
+  const handleUndoClick = (): void => {
+    if (Object.keys(previousPlayerStats).length === 0) return;
+
+    const playerIndex = getIndexOfPlayerFromLastTurn();
+
+    // Check if it's the first dart of the round being undone and round subtraction hasn't occurred yet
+    if (
+      props.throwsRemaining === 3 &&
+      props.currentPlayerIndex === 0 &&
+      props.currentRound > 1
+    ) {
+      props.setCurrentRound((currentRound) => currentRound - 1);
+    }
+
+    const switchToPrevPlayer =
+      playerIndex !== props.currentPlayerIndex ||
+      (props.throwsRemaining === 3 && players.length === 1);
+    if (switchToPrevPlayer) switchToPlayersLastTurn(playerIndex);
+
+    props.setThrowsRemaining(previousPlayerStats.throwsRemaining);
+
+    setPlayerStats((prevPlayerStats) => ({
+      ...prevPlayerStats,
+      [players[playerIndex]]: {
+        ...prevPlayerStats[players[playerIndex]],
+        ...previousPlayerStats,
+      } as PlayerStatsCricket,
+    }));
+  };
+
+  const switchToPlayersLastTurn = (playerIndex: number): void => {
+    props.setCurrentPlayerIndex(playerIndex);
+    props.setThrowsRemaining(1);
+  };
+
+  const getIndexOfPlayerFromLastTurn = (): number => {
+    let playerIndex = props.currentPlayerIndex;
+    if (props.throwsRemaining === 3 && playerIndex != 0) {
+      playerIndex--;
+    } else if (props.throwsRemaining === 3) {
+      playerIndex = players.length - 1;
+    }
+    return playerIndex;
+  };
+
   const handleMultiplierClick = (multiplierValue: number): void => {
     setMultiplier(multiplierValue);
   };
@@ -253,6 +320,8 @@ function LocalCricketGame(props: LocalCricketGameProps) {
       cbHandleMultiplierClicked={handleMultiplierClick}
       playerStats={playerStats}
       throwsRemaining={props.throwsRemaining}
+      playerWinner={playerWon}
+      cbHandleUndoClicked={handleUndoClick}
     />
   );
 }

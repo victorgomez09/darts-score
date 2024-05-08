@@ -33,13 +33,15 @@ const initializePlayerTotalGameStats = (
 };
 
 function LocalGames(props: LocalGamesProps) {
-  const [showGoToMainMenuPopUp, setShowGoToMainMenuPopUp] =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_showGoToMainMenuPopUp, setShowGoToMainMenuPopUp] =
     useState<boolean>(false);
   const [playerTotalGameStats, setPlayerTotalGameStats] =
     useState<PlayerToPlayerTotalGameStats>(() =>
       initializePlayerTotalGameStats(props.players)
     );
-  const [winningPlayer, setWinningPlayer] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_winningPlayer, setWinningPlayer] = useState<string | null>(null);
   const [throwsRemaining, setThrowsRemaining] = useState<number>(3);
   const [currentRound, setCurrentRound] = useState<number>(1);
   const [startingPlayerOfSetIndex, setStartingPlayerOfSetIndex] =
@@ -147,6 +149,12 @@ function LocalGames(props: LocalGamesProps) {
     setCurrentRound: setCurrentRound,
   };
 
+  const cricketGameProps = {
+    setThrowsRemaining: setThrowsRemaining,
+    setCurrentPlayerIndex: setCurrentPlayerIndex,
+    setCurrentRound: setCurrentRound,
+  };
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleBeforeUnload = (event: any) => {
@@ -197,7 +205,9 @@ function LocalGames(props: LocalGamesProps) {
       {props.selectedGamemode === "rcl" && (
         <LocalRoundTheClockGame {...gameProps} />
       )}
-      {props.selectedGamemode === "cri" && <LocalCricketGame {...gameProps} />}
+      {props.selectedGamemode === "cri" && (
+        <LocalCricketGame {...gameProps} {...cricketGameProps} />
+      )}
       {props.selectedGamemode === "ludo" && (
         <LocalLudoGame
           {...gameProps}

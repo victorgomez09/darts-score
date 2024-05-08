@@ -47,7 +47,7 @@ const initializePlayerStats = (
           : stats.totalScore,
       turns: 0,
       lastThrows: [],
-      throwsRemaining: 0,
+      throwsRemaining: 3,
       checkoutOptions: [],
     };
   });
@@ -69,10 +69,15 @@ function LocalLudoGame({
     initializePlayerStats(props.players)
   );
   const [playersKilled, setPlayersKilled] = useState<string[]>([]);
+  const [playerWon, setPlayerWon] = useState<string>("");
 
   useEffect(() => {
     if (playersKilled.length > 0) setTimeout(() => setPlayersKilled([]), 1200);
   }, [playersKilled]);
+
+  useEffect(() => {
+    if (playerWon.length > 0) setTimeout(() => setPlayerWon(""), 5000);
+  }, [playerWon]);
 
   const handleScoreChange = (points: number): void => {
     if (multiplier === 3 && points === 25) return;
@@ -117,6 +122,7 @@ function LocalLudoGame({
     playerStats: PlayerStats
   ): PlayerStats => {
     playerStats.scoreAtBeginningOfRound = playerStats.score;
+
     return playerStats;
   };
 
@@ -163,7 +169,8 @@ function LocalLudoGame({
       updatedScore < 0 ||
       (props.modeOut === "double" &&
         (multiplier === 1 || multiplier === 3) &&
-        updatedScore <= 0) ||
+        updatedScore === 301 &&
+        throwsRemaining <= 1) ||
       (multiplier === 2 && updatedScore === 1);
 
     if (updatedScoreIsInvalid) {
@@ -194,9 +201,12 @@ function LocalLudoGame({
     playerIndex: number,
     thrownPoints: number
   ) => {
-    const playerWon = updatedScore === 301 && props.modeOut !== "double";
+    const playerWon =
+      (updatedScore === 301 && props.modeOut !== "double") ||
+      (updatedScore === 301 && props.modeOut === "double" && thrownPoints != 1);
     if (playerWon) {
       props.cbPlayerHasWon(players[playerIndex]);
+      setPlayerWon(players[playerIndex]);
       setPlayerStats(
         initializePlayerStats(
           props.players,
@@ -354,6 +364,7 @@ function LocalLudoGame({
       modeOut={props.modeOut}
       throwsRemaining={throwsRemaining}
       playersKilled={playersKilled}
+      playerWinner={playerWon}
     />
   );
 }

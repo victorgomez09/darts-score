@@ -57,7 +57,7 @@ function RoundTheClockGameView(props: RoundTheClockGameViewProps) {
           onClick={props.cbHandleMissClicked}
           disabled={props.isPlayersTurn === false}
         >
-          Miss
+          Fallo
         </button>
       </div>
       <div className="columns is-centered">

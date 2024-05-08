@@ -55,7 +55,7 @@ function PlayersAndSettings(props: PlayersAndSettingsProps) {
       ) : (
         <div className="hero">
           <div className="hero-content w-full h-full">
-            <div className="card !shadow bg-base-100 w-8/12">
+            <div className="card !shadow bg-base-100 w-10/12">
               <div className="card-body p-4">
                 <PlayerMenu
                   players={props.players}

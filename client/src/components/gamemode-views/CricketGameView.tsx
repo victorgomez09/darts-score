@@ -9,6 +9,8 @@ import { GameViewWithScoreProps } from "./GameView.ts";
 export interface CricketGameViewProps extends GameViewWithScoreProps {
   playerStats: PlayerToPlayerStatsCricket;
   throwsRemaining: number;
+  playerWinner: string;
+  cbHandleUndoClicked?(): void;
 }
 
 function CricketGameView(props: CricketGameViewProps) {
@@ -48,45 +50,69 @@ function CricketGameView(props: CricketGameViewProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 w-full h-full">
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="bg-body p-4">
-          <p className="card-title justify-center">
-            Ronda: {props.currentRound}
-          </p>
+    <>
+      <div className="flex flex-col items-center justify-center gap-2 w-full h-full">
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="bg-body p-4">
+            <p className="card-title justify-center">
+              Ronda: {props.currentRound}
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className="card !shadow bg-base-100 w-full h-full overflow-auto">
-        <div className="bg-body p-4">
-          <div className="flex flex-wrap gap-2">
-            {props.players.map((player) => renderPlayerScoreCard(player))}
+        <div className="card !shadow bg-base-100 w-full h-full overflow-auto">
+          <div className="bg-body p-4">
+            <div className="flex flex-wrap gap-2">
+              {props.players.map((player) => renderPlayerScoreCard(player))}
+            </div>
+          </div>
+        </div>
+
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="card-body p-4">
+            <GameInputButtons
+              values={[...Array(6).keys()].map((num) => 14 + num).concat(24)}
+              cbHandleButtonClicked={props.cbHandleScoreBtnClicked}
+              showMissButton={true}
+              btnSize={60}
+              disabled={props.isPlayersTurn === false}
+            />
+          </div>
+        </div>
+
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="card-body justify-center p-4">
+            <div className="flex items-center justify-center">
+              <GameMultiplierButtons
+                multiplier={props.multiplier}
+                cbHandleMultiplierClicked={props.cbHandleMultiplierClicked}
+                disabled={props.isPlayersTurn === false}
+              />
+              {props.cbHandleUndoClicked && (
+                <button
+                  className="btn btn-error m-1"
+                  onClick={props.cbHandleUndoClicked}
+                >
+                  Deshacer
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="card-body p-4">
-          <GameInputButtons
-            values={[...Array(6).keys()].map((num) => 14 + num).concat(24)}
-            cbHandleButtonClicked={props.cbHandleScoreBtnClicked}
-            showMissButton={true}
-            btnSize={60}
-            disabled={props.isPlayersTurn === false}
-          />
+      {/* Player win modal */}
+      <dialog className={`modal ${props.playerWinner ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <div className="flex items-center py-4">
+            <span className="mr-2">{props.playerWinner} ha ganado 🏆</span>
+          </div>
         </div>
-      </div>
-
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="card-body justify-center p-4">
-          <GameMultiplierButtons
-            multiplier={props.multiplier}
-            cbHandleMultiplierClicked={props.cbHandleMultiplierClicked}
-            disabled={props.isPlayersTurn === false}
-          />
-        </div>
-      </div>
-    </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </>
   );
 }
 

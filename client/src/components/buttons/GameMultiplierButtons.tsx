@@ -33,7 +33,7 @@ function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
         onClick={() => props.cbHandleMultiplierClicked(1)}
         disabled={props.disabled}
       >
-        Single
+        Normal
       </button>
       <button
         className={`btn btn-success m-1 ${
@@ -44,7 +44,7 @@ function GameMultiplierButtons(props: GameMultiplierButtonsProps) {
         onClick={() => props.cbHandleMultiplierClicked(2)}
         disabled={props.disabled}
       >
-        Double
+        Doble
       </button>
       <button
         className={`btn btn-warning m-1 ${

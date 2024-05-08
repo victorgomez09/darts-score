@@ -13,6 +13,7 @@ export interface StandardGamesViewProps extends GameViewWithScoreProps {
 
   modeOut: InAndOutMode;
   throwsRemaining: number;
+  playerWinner: string;
 }
 
 function StandardGamesView(props: StandardGamesViewProps) {
@@ -55,55 +56,69 @@ function StandardGamesView(props: StandardGamesViewProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 w-full h-full">
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="card-body p-4">
-          <h1 className="card-title text-xl font-semibold justify-center">
-            Ronda: {props.currentRound}
-          </h1>
-        </div>
-      </div>
-
-      <div className="card !shadow bg-base-100 w-full h-full overflow-auto">
-        <div className="card-body p-4">
-          <div className="flex flex-wrap flex-1 items-center gap-4">
-            {props.players.map((player) => renderPlayerScoreCard(player))}
+    <>
+      <div className="flex flex-col items-center justify-center gap-2 w-full h-full">
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="card-body p-4">
+            <h1 className="card-title text-xl font-semibold justify-center">
+              Ronda: {props.currentRound}
+            </h1>
           </div>
         </div>
-      </div>
 
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="card-body p-4">
-          <GameInputButtons
-            values={[...Array(20).keys()].map((num) => num).concat(24)}
-            cbHandleButtonClicked={props.cbHandleScoreBtnClicked}
-            showMissButton={false}
-            btnSize={20}
-            disabled={props.isPlayersTurn === false}
-          />
+        <div className="card !shadow bg-base-100 w-full h-full overflow-auto">
+          <div className="card-body p-4">
+            <div className="flex flex-wrap flex-1 items-center gap-4">
+              {props.players.map((player) => renderPlayerScoreCard(player))}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="card !shadow bg-base-100 w-full">
-        <div className="card-body p-4">
-          <div className="flex items-center justify-center">
-            <GameMultiplierButtons
-              multiplier={props.multiplier}
-              cbHandleMultiplierClicked={props.cbHandleMultiplierClicked}
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="card-body p-4">
+            <GameInputButtons
+              values={[...Array(20).keys()].map((num) => num).concat(24)}
+              cbHandleButtonClicked={props.cbHandleScoreBtnClicked}
+              showMissButton={true}
+              btnSize={20}
               disabled={props.isPlayersTurn === false}
             />
-            {props.cbHandleUndoClicked && (
-              <button
-                className="btn btn-error m-1"
-                onClick={props.cbHandleUndoClicked}
-              >
-                Undo
-              </button>
-            )}
+          </div>
+        </div>
+
+        <div className="card !shadow bg-base-100 w-full">
+          <div className="card-body p-4">
+            <div className="flex items-center justify-center">
+              <GameMultiplierButtons
+                multiplier={props.multiplier}
+                cbHandleMultiplierClicked={props.cbHandleMultiplierClicked}
+                disabled={props.isPlayersTurn === false}
+              />
+              {props.cbHandleUndoClicked && (
+                <button
+                  className="btn btn-error m-1"
+                  onClick={props.cbHandleUndoClicked}
+                >
+                  Deshacer
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Player win modal */}
+      <dialog className={`modal ${props.playerWinner ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <div className="flex items-center py-4">
+            <span className="mr-2">{props.playerWinner} ha ganado 🏆</span>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </>
   );
 }
 

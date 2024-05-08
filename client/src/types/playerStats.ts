@@ -39,6 +39,7 @@ export interface CricketStats {
 export interface PlayerStatsCricket {
   score: number;
   cricketStats: CricketStats;
+  throwsRemaining: number;
 }
 
 export type PlayerToPlayerStatsCricket = {

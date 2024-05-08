@@ -28,7 +28,7 @@ function GameInputButtons(props: GameInputButtonsProps) {
           style={{ width: `${props.btnSize}px` }}
           disabled={props.disabled}
         >
-          Miss
+          Fallo
         </button>
       )}
     </div>

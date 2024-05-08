@@ -120,8 +120,8 @@ function PlayerScoreCardCricket(props: PlayerScoreCardCricketProps) {
 
         {/* TODO */}
         <div className="flex flex-wrap items-center">
-          {tableHeaders.map((header: string) => (
-            <div className="flex flex-col items-center">
+          {tableHeaders.map((header: string, index: number) => (
+            <div key={index} className="flex flex-col items-center">
               <span
                 key={header}
                 style={{ width: "55px" }}

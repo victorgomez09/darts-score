@@ -158,7 +158,7 @@ function GameSettings(props: GameSettingsProps) {
       <div className="modal" role="dialog">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Info 📖</h3>
-          <p className="py-4">
+          <div className="py-4">
             <ul>
               <li>
                 <span className="font-semibold italic">LEG</span>: Cuando un
@@ -169,7 +169,7 @@ function GameSettings(props: GameSettingsProps) {
                 legs.
               </li>
             </ul>
-          </p>
+          </div>
         </div>
         <label className="modal-backdrop" htmlFor="my_modal_7">
           Close

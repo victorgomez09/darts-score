@@ -14,6 +14,7 @@ export interface LudoGameViewProps extends GameViewWithScoreProps {
   modeOut: InAndOutMode;
   throwsRemaining: number;
   playersKilled: string[];
+  playerWinner: string;
 }
 
 function LudoGameView(props: LudoGameViewProps) {
@@ -100,7 +101,7 @@ function LudoGameView(props: LudoGameViewProps) {
                   className="btn btn-error m-1"
                   onClick={props.cbHandleUndoClicked}
                 >
-                  Undo
+                  Deshacer
                 </button>
               )}
             </div>
@@ -108,6 +109,7 @@ function LudoGameView(props: LudoGameViewProps) {
         </div>
       </div>
 
+      {/* Player killed modal */}
       <dialog
         className={`modal ${props.playersKilled.length ? "modal-open" : ""}`}
       >
@@ -120,6 +122,18 @@ function LudoGameView(props: LudoGameViewProps) {
                 {props.playersKilled.length > 1 && <span>, </span>}
               </div>
             ))}
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+
+      {/* Player win modal */}
+      <dialog className={`modal ${props.playerWinner ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <div className="flex items-center py-4">
+            <span className="mr-2">{props.playerWinner} ha ganado 🏆</span>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
