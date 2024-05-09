@@ -28,6 +28,12 @@ function MainMenu() {
               >
                 Torneo
               </button>
+              <button
+                className="btn btn-primary btn-block"
+                onClick={() => navigate("/settings")}
+              >
+                Ajustes
+              </button>
             </div>
           </div>
         </div>
