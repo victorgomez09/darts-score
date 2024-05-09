@@ -164,10 +164,12 @@ function LocalStandardGames({
       updatedScore < 0 ||
       (props.modeOut === "double" &&
         (multiplier === 1 || multiplier === 3) &&
-        updatedScore === props.gamemodeTotalScore &&
+        updatedScore === 0 &&
         throwsRemaining <= 1) ||
       (multiplier === 2 && updatedScore === 1);
 
+    console.log("liveScore", updatedScore);
+    console.log("updatedScoreIsInvalid", updatedScoreIsInvalid);
     if (updatedScoreIsInvalid) {
       resetScoreToBeginningOfRound(playerIndex);
       props.switchToNextPlayer();
@@ -187,6 +189,7 @@ function LocalStandardGames({
     const currentPlayerStats = playerStats[players[playerIndex]];
     const currentPlayerScore = currentPlayerStats.score;
     const updatedScore = currentPlayerScore - thrownPoints;
+
     return updatedScore;
   };
 

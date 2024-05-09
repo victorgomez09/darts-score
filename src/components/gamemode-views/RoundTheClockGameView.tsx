@@ -29,7 +29,7 @@ function RoundTheClockGameView(props: RoundTheClockGameViewProps) {
         sets={props.playerTotalGameStats[userID].sets}
         legs={props.playerTotalGameStats[userID].legs}
         disabled={!isActive}
-        throwsRemaining={props.throwsRemaining}
+        throwsRemaining={3}
       />
     );
   };

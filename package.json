@@ -1,28 +1,22 @@
 {
-  "homepage": "https://si-ni.github.io/DartsCounter/",
-  "name": "client",
+  "name": "vira-darts",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host --port 3000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest"
   },
   "dependencies": {
     "axios": "^1.6.5",
-    "bulma": "^0.9.4",
     "react": "^18.2.0",
-    "react-cookie": "^7.0.2",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.2",
-    "react-share": "^5.1.0",
-    "react-spinners": "^0.13.8",
-    "vh-check": "^2.0.5"
+    "react-router-dom": "^6.21.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.1",
@@ -37,8 +31,6 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "gh-pages": "^6.1.1",
-    "jsdom": "^24.0.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",

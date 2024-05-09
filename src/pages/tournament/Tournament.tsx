@@ -15,11 +15,13 @@ function Tournament() {
   const [legsForSet, setLegsForSet] = useState<number>(1);
   const [modeIn, setModeIn] = useState<InAndOutMode>("straight");
   const [modeOut, setModeOut] = useState<InAndOutMode>("double");
-  const [endOfRoundPopUpContent, setEndOfRoundPopUpContent] =
+  const [_endOfRoundPopUpContent, setEndOfRoundPopUpContent] =
     useState<string>("");
-  const [showEndOfRoundPopUp, setShowEndOfRoundPopUp] =
+  const [_showEndOfRoundPopUp, setShowEndOfRoundPopUp] =
     useState<boolean>(false);
-  const [tournamentWinner, setTournamentWinner] = useState<string | null>(null);
+  const [_tournamentWinner, setTournamentWinner] = useState<string | null>(
+    null
+  );
   const navigate = useNavigate();
 
   const handleBackToPlayerMenu = (): void => {
